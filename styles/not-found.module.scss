@@ -1,0 +1,7 @@
+@use 'variables' as *;
+
+.a {
+    background-color: $main;
+    color: $background;
+    padding: 5px 10px;
+}

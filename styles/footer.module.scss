@@ -1,0 +1,12 @@
+@use 'variables' as *;
+
+.footer {
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: $main;
+    color: $secondary-text;
+    height: 100px;
+    font-size: clamp(5px, 4vw, 20px);
+}

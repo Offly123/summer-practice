@@ -1,0 +1,39 @@
+@use 'variables' as *;
+
+html, body, h1, h2, button, ul, li, a, p{
+    all: unset
+}
+
+html {
+    height: 100%;
+    min-height: 100%;
+    font-weight: 800;
+    font-size: clamp(10px, 5vw, 20px);
+}
+
+body {
+    background-color: $background;
+    color: $main-text;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    font-weight: inherit;
+}
+
+a {
+    cursor: pointer;
+}
+
+p {
+    display: block;
+}
+
+.main {
+    padding: 20px 10px;
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}

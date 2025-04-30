@@ -1,0 +1,39 @@
+@use 'variables' as *;
+
+.about {
+    display: flex;
+    justify-content: space-between;
+    background-color: $secondary;
+    color: $background;
+    padding: 15px;
+    margin: 10px;
+    width: clamp(0px, 80vw, 800px);
+    transition: scale 0.1s;
+
+    section {
+        h2 {
+            text-wrap: nowrap;
+            font-size: clamp(10px, 5vw, 40px);
+        }
+
+        p {
+            font-size: clamp(5px, 3vw, 20px);
+        }
+
+
+    }
+    
+    img {
+        align-self: center;
+        display: block;
+        height: clamp(75px, 30vw, 300px);
+    }
+
+}
+
+.about:hover {
+    scale: 1.06;    
+    @media screen and (min-width: $max-phone) {
+        scale: 1.03;
+    }
+}

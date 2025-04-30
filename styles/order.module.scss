@@ -1,0 +1,50 @@
+@use 'variables' as *;
+
+.productList {
+    color: $background;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.productCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 5px;
+    height: 350px;
+    width: clamp(20px, 80vw, 300px);
+    background-color: $secondary;
+
+    h2 {
+        font-size: 23px;
+        text-align: center;
+        border-bottom: 4px solid $accent;
+        padding: 5px;
+    }
+
+    .imageWrap {
+        display: flex;
+        justify-content: center;
+        width: 70%;
+        background-color: $secondary-pale;
+        padding: 5px;
+
+        img {
+            padding: 5px;
+        }
+    }
+
+    p {
+        align-self: flex-start;
+        font-size: clamp(15px, 2vw, 15px);
+    }
+
+    p:last-child {
+        align-self: flex-end;
+        background-color: $accent;
+        padding: 5px;
+    }
+}

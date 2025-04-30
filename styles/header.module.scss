@@ -1,0 +1,38 @@
+@use 'variables' as *;
+
+.header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    padding: 0 clamp(0px, 5vw, 50px);
+    background-color: $main;
+
+    height: 120px;
+    flex-direction: column;
+    justify-content: space-around;
+    @media screen and (min-width: $max-phone) {
+        height: 100px;
+        flex-direction: row;
+        justify-content: space-between;
+        
+        flex-wrap: nowrap;
+    }
+
+    h1 {
+        font-size: clamp(20px, 4vw, 30px);
+        font-weight: 800;
+
+        a {
+            display: flex;
+            align-items: center;
+
+            * {
+                margin: 0 3px;
+            }
+
+            img {
+                height: clamp(20px, 8vw, 45px);
+            }
+        }
+    }
+}
