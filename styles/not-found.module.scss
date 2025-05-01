@@ -1,7 +1,11 @@
-@use 'variables' as *;
+@use 'colors' as *;
 
 .a {
     background-color: $main;
     color: $background;
     padding: 5px 10px;
+}
+
+.a:hover {
+    background-color: $nav-hover;
 }

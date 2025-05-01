@@ -1,11 +1,4 @@
-@use 'variables' as *;
-
-.productList {
-    color: $background;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
+@use 'colors' as *;
 
 .productCard {
     display: flex;
@@ -17,6 +10,8 @@
     height: 350px;
     width: clamp(20px, 80vw, 300px);
     background-color: $secondary;
+    box-shadow: 1px 1px 5px $accent;
+    transition: all 0.1s;
 
     h2 {
         font-size: 23px;
@@ -29,7 +24,6 @@
         display: flex;
         justify-content: center;
         width: 70%;
-        background-color: $secondary-pale;
         padding: 5px;
 
         img {
@@ -46,5 +40,13 @@
         align-self: flex-end;
         background-color: $accent;
         padding: 5px;
+    }
+}
+
+.productCard:hover {
+    box-shadow: 3px 3px 5px $accent;
+    scale: 1.03;
+    @media screen and (min-width: $max-phone) {
+        scale: 1.02;
     }
 }

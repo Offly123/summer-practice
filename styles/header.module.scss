@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use 'colors' as *;
 
 .header {
     display: flex;
@@ -19,8 +19,6 @@
     }
 
     h1 {
-        font-size: clamp(20px, 4vw, 30px);
-        font-weight: 800;
 
         a {
             display: flex;

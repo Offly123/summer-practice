@@ -1,4 +1,5 @@
-@use 'variables' as *;
+@use 'colors' as *;
+@use 'fonts' as f;
 
 .about {
     display: flex;
@@ -15,12 +16,6 @@
             text-wrap: nowrap;
             font-size: clamp(10px, 5vw, 40px);
         }
-
-        p {
-            font-size: clamp(5px, 3vw, 20px);
-        }
-
-
     }
     
     img {
@@ -32,7 +27,7 @@
 }
 
 .about:hover {
-    scale: 1.06;    
+    scale: 1.06;
     @media screen and (min-width: $max-phone) {
         scale: 1.03;
     }
