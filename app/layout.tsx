@@ -1,3 +1,5 @@
+// Шаблон страницы, включает хэдер и футер
+
 import React from 'react';
 
 import Header from '$/Header';

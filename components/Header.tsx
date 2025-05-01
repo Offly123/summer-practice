@@ -1,3 +1,7 @@
+// Компонент хэдера, отображается на всех страницах
+
+
+
 import Navbar from '$/Navbar';
 
 import style from '@/header.module.scss';

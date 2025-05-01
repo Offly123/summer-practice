@@ -1,0 +1,8 @@
+@use 'colors' as *;
+
+.productList {
+    color: $background;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
