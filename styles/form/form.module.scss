@@ -3,13 +3,17 @@
 .form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    min-height: 40dvh;
+    height: fit-content;
+    width: clamp(200px, 40vw, 400px);
     align-items: center;
+    box-shadow: 1px 1px 5px $accent;
     background-color: $secondary;
     color: $background;
 
     .main {
-    
+        width: 100%;
     }
 
     .end {

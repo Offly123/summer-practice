@@ -2,21 +2,25 @@
 
 .field {
     display: flex;
+    width: 100%;
     padding: 5px;
     flex-direction: column;
     align-items: center;
 
     label {
-        
+        cursor: text;
     }
 
     input {
+        width: clamp(10px, 80%, 300px);
         padding: 5px;
         background-color: $background;
         color: $secondary;
     }
+}
 
-    input:focus {
-        background-color: $main;
+.errored {
+    label {
+        color: red;
     }
 }

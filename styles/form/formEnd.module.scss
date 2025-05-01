@@ -1,0 +1,16 @@
+@use '@/colors' as *;
+
+.end {
+    display: flex;
+    flex-direction: row-reverse;
+    align-self: end;
+    padding: 5px;
+    width: calc(100% - 10px);
+    justify-content: end;
+
+    button {
+        background-color: $background;
+        padding: 5px;
+        color: $secondary;
+    }
+}
