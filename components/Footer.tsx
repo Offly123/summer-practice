@@ -3,7 +3,7 @@
 
 
 import React from 'react';
-import style from '@/footer.module.scss';
+import style from '@/footer/footer.module.scss';
 
 export default function Footer() {
     return (

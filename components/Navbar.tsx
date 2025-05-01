@@ -2,7 +2,7 @@
 
 
 
-import style from '@/navbar.module.scss';
+import style from '@/header/navbar.module.scss';
 
 export default function Navbar() {
     return (

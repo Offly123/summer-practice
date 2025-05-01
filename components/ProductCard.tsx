@@ -2,7 +2,7 @@
 'use client'
 
 
-import style from '@/productCard.module.scss';
+import style from '@/shop/productCard.module.scss';
 
 
 interface Product {

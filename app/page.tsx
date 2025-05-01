@@ -4,7 +4,7 @@
 
 import ProductCard from '$/ProductCard';
 
-import style from '@/shop.module.scss';
+import style from '@/shop/shop.module.scss';
 
 
 export default function Shop() {

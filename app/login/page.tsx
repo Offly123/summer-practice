@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import TextInput from '$/TextInput';
 
-import style from '@/login.module.scss';
+import style from '@/login/login.module.scss';
 import FormHead from '$/FormHead';
 
 

@@ -4,7 +4,7 @@
 
 import Navbar from '$/Navbar';
 
-import style from '@/header.module.scss';
+import style from '@/header/header.module.scss';
 
 export default function Header() {
     return (

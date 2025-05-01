@@ -1,4 +1,4 @@
-import style from '@/textInput.module.scss'
+import style from '@/form/textInput.module.scss'
 
 export default function TextInput({id, label, type}) {
     return (

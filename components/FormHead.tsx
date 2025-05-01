@@ -1,4 +1,4 @@
-import style from '@/formHead.module.scss'
+import style from '@/form/formHead.module.scss'
 
 export default function FormHead({ children }: {children: React.ReactNode}) {
     return (
