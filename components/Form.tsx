@@ -1,6 +1,6 @@
 'use client'
 
-import React, { act, useState } from 'react';
+import React, { useState } from 'react';
 
 import FormHead from '$/FormHead';
 import FormEnd from '$/FormEnd';
@@ -9,17 +9,28 @@ import FormError from '$/FormError';
 import { FormResponse } from 'app/api/login/route';
 
 import style from '@/form/form.module.scss';
+import RadioInput from './RadioInput';
+
+interface FieldResponse {
+    error: boolean,
+    message: string,
+    got: any
+}
+
+export interface FormData {
+    [fieldName: string]: FieldResponse
+}
 
 export default function Form({ 
     action, 
     headText, 
-    sendText,
+    sendButtonText,
     successRedirect, 
     children,
 }: { 
     action: string, 
     headText: string, 
-    sendText: string,
+    sendButtonText: string,
     successRedirect: string,
     children: React.ReactNode 
 }) {
@@ -31,16 +42,24 @@ export default function Form({
             fieldList[child.props.name] = {error: false, message: ''};
         })
         return fieldList;
-    })
+    });
+
 
     // Смена состояния полей формы
     const changeState = (event) => {
-        const { name, value } = event.target;
-        setFormData({...formData, [name]: value});
+        if (event.target.type == RadioInput) {
+            const { name, checked } = event.target;
+            setFormData({...formData, [name]: checked});
+        } else {
+            const { name, value } = event.target;
+            setFormData({...formData, [name]: value});
+        }
     }
 
-    // Список ошибок, пока не доделано
+
+    // Состояние для списка ошибок
     const [errorList, setErrorList] = useState<FormResponse>({});
+
 
     // При отправке меняем состояние
     const handleSumbit = async (event) => {
@@ -98,7 +117,7 @@ export default function Form({
                     })
                 }
             </div>
-            <FormEnd sendText={ sendText } ></FormEnd>
+            <FormEnd sendButtonText={ sendButtonText } ></FormEnd>
         </form>
     )
 }

@@ -1,19 +1,11 @@
 'use server'
 
-interface FieldResponse {
-    error: boolean,
-    message: string,
-    got: string
-}
-
-export interface FormResponse {     
-    [key: string]: FieldResponse
-}
+import Formdata from 'components/Form';
 
 export async function POST(req: Request): Promise<Response> {
     const formData = await req.json();
 
-    let res: FormResponse = {};
+    let res: FormData = {};
 
     if (!(/^[а-яА-ЯеЁ\s-]+$/).test(formData.first_name)) {
         res = {
@@ -51,6 +43,15 @@ export async function POST(req: Request): Promise<Response> {
                 message: 'Адрес должен быть формата some@mail.com'
             }
         };
+    }
+
+    if (!formData.gender) {
+        res = {
+            ...res, gender: {
+                error: true,
+                message: 'Укажите ваш пол'
+            }
+        }
     }
 
     return new Response(JSON.stringify(res));

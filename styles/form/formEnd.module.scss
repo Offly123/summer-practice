@@ -1,11 +1,15 @@
 @use '@/colors' as *;
 
+$margin: 5px;
+$padding: 5px;
+
 .end {
     display: flex;
     flex-direction: row-reverse;
     align-self: end;
-    padding: 5px;
-    width: calc(100% - 10px);
+    margin: $margin;
+    padding: $padding;
+    width: calc(100% - $margin * 2 - $padding * 2);
     justify-content: end;
 
     button {

@@ -2,48 +2,53 @@
 
 import React, { useState } from 'react';
 
-import { FormResponse } from 'app/api/login/route';
+import { FormData } from '$/Form';
 
 import style from '@/form/radioInput.module.scss';
 
 export default function RadioInput({
-    name,
+    label,
+    onChange,
     children
 }: {
-    name: string,
+    label: string,
+    onChange: Function,
     children: React.ReactNode
 }) {
 
-    const [radioButtons, setRadioButtons] = useState(() => {
-        let fieldList: FormResponse = {};
-        React.Children.forEach(children, (child: Object) => {
-            fieldList[child.props.name] = {error: false, message: ''};
-        })
-        return fieldList;
-    })
+    const [ isChecked, setIsChecked ] = useState(() => {
+        let radioButtons = {};
+        React.Children.forEach(children, (child) => {
+            radioButtons[child.props.value] = false;
+        });
+        return radioButtons;
+    });
 
-    // Смена состояния полей формы
-    const changeState = (event) => {
-        const { name, value } = event.target;
-        setRadioButtons({...radioButtons, [name]: value});
+    const handleChange = (event) => {
+        console.log(isChecked);
+        const { value } = event.target;
+        const newState = {};
+        React.Children.forEach(children, (child) => {
+            newState[child.props.value] = (child.props.value === value);
+        });
+        setIsChecked(newState);
     }
 
     return (
-        <div>
+        <div className={style.radioInput}>
             <label>
-                {name}
+                { label }
             </label>
-            {
-                React.Children.map(children, (child) => {
-                    if (!React.isValidElement(child)) {
-                        return child;
-                    }
-                    return React.cloneElement(child, {
-                        checked: true,
-                        onChange: changeState,
-                    })
-                })
-            }
+            <div className={style.buttons}>
+                {
+                    React.Children.map(children, (child) => (
+                        React.cloneElement(child, {
+                            checked: isChecked[child.props.name], 
+                            onChange: onChange
+                        })
+                    ))
+                }
+            </div>
         </div>
-    )
+    );
 }

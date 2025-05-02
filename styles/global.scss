@@ -1,6 +1,6 @@
 @use 'colors' as *;
 
-html, body, h1, h2, button, ul, li, a, p{
+html, body, h1, h2, button, input, ul, li, a, p{
     all: unset
 }
 
@@ -34,8 +34,11 @@ a, button {
     cursor: pointer;
 }
 
-p, label, input {
-    font-size: clamp(5px, 3vw, 20px);
+p, label {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    font-size: clamp(7px, 4vw, 20px);
     display: block;
 }
 

@@ -2,7 +2,7 @@
 
 .field {
     display: flex;
-    width: 100%;
+    width: calc(100% - 10px);
     padding: 5px;
     flex-direction: column;
     align-items: center;
@@ -12,6 +12,9 @@
     }
 
     input {
+        all: unset;
+        box-shadow: none;
+        border: none;
         width: clamp(10px, 80%, 300px);
         padding: 5px;
         background-color: $background;
