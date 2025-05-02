@@ -1,8 +1,8 @@
 import style from '@/form/formError.module.scss';
 
-import { FormResponse } from 'app/api/login/route';
+import { FormData } from './Form';
 
-export default function FormError({ errorList }: {errorList: FormResponse}) {
+export default function FormError({ errorList }: {errorList: FormData}) {
     // console.log('FormError');
     // console.log(errorList);
     return (

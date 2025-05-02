@@ -1,4 +1,4 @@
-'use clien'
+'use client'
 
 import style from '@/form/textInput.module.scss'
 

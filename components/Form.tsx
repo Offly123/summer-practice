@@ -14,7 +14,6 @@ import RadioInput from './RadioInput';
 interface FieldResponse {
     error: boolean,
     message: string,
-    got: any
 }
 
 export interface FormData {
@@ -89,7 +88,7 @@ export default function Form({
         });
 
         if (!anyErrors) {
-            // window.location.href = successRedirect;
+            window.location.href = successRedirect;
         }
 
         setFormData(formData);
