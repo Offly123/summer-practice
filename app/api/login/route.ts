@@ -1,16 +1,18 @@
 'use server'
 
-import mysql from 'mysql2/promise';
 import { cookies } from 'next/headers';
-
-import { FormData } from '$/Form';
 
 import { getSHA256, connectToDB } from '../db';
 import { createJWT } from '../jwt';
 
+interface LoginData {
+    client_login: string,
+    client_password: string
+}
+
 
 export async function POST(req: Request): Promise<Response> {
-    const loginData: Object = await req.json();
+    const loginData: LoginData = await req.json();
 
     const connection = await connectToDB();
 
@@ -26,7 +28,8 @@ export async function POST(req: Request): Promise<Response> {
     WHERE client_login=?
     `;
     try {
-        answerDB = await connection.execute(sqldbHash, [loginData.login]);
+        answerDB = await connection.execute(sqldbHash, [loginData.client_login]);
+        answerDB = answerDB[0][0];
     } catch (err) {
         return new Response(JSON.stringify({ssdfg: {
             error: true,
@@ -39,7 +42,11 @@ export async function POST(req: Request): Promise<Response> {
     connection.end();
 
     // Если неправильный логин/пароль - возвращаем ошибку
-    if (!loginData.client_password || isEmpty(loginData.client_password) || getSHA256(loginData.client_password) !== answerDB[0][0].client_password) {
+    if (!answerDB || 
+        !loginData.client_password || 
+        isEmpty(loginData.client_password) || 
+        getSHA256(loginData.client_password) !== answerDB.client_password
+    ) {
         return new Response(JSON.stringify({client_password: {
             error: true,
             message: 'Неправильный логин или пароль'

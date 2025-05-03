@@ -1,0 +1,22 @@
+.p {
+
+    position: relative;
+
+    .img {
+        position: absolute;
+        right: 110%;
+        top: -8%;
+        display: inline;
+        height: 30px;
+        animation: cube-spin 1.5s infinite;
+    }
+
+    @keyframes cube-spin {
+        0% {
+            rotate: 0deg;
+        }
+        100% {
+            rotate: 360deg;
+        }
+    }
+}

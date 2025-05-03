@@ -1,6 +1,4 @@
 'use server'
-
-import mysql from 'mysql2/promise';
 import { cookies } from 'next/headers';
 
 import { FormData } from '$/Form';
@@ -23,7 +21,7 @@ export async function POST(req: Request): Promise<Response> {
     const registrationData: RegistrationData = await req.json();
     
     
-    const errorList = getErrorList(registrationData);
+    const errorList = await getErrorList(registrationData);
 
     if (!isEmpty(errorList)) {
         return new Response(JSON.stringify(errorList));
@@ -36,6 +34,8 @@ export async function POST(req: Request): Promise<Response> {
         return connection;
     }
     
+
+
     connection.beginTransaction();
 
 
@@ -87,7 +87,7 @@ export async function POST(req: Request): Promise<Response> {
 }
 
 
-const getErrorList = (registrationData): FormData => {
+export const getErrorList = async (registrationData: RegistrationData): Promise<FormData> => {
 
     let errorList: FormData = {};
 
@@ -109,7 +109,7 @@ const getErrorList = (registrationData): FormData => {
         };
     }
 
-    if (!(/^[а-яА-ЯеЁ\-]+$/).test(registrationData.first_name)) {
+    if (!(/^[а-яА-ЯёЁ\-]+$/).test(registrationData.first_name)) {
         errorList = {
             ...errorList, first_name: {
                 error: true, 
@@ -118,7 +118,7 @@ const getErrorList = (registrationData): FormData => {
         };
     }
 
-    if (!(/^[а-яА-ЯеЁ\s-]+$/).test(registrationData.last_name)) {
+    if (!(/^[а-яА-ЯёЁ\s-]+$/).test(registrationData.last_name)) {
         errorList = {
             ...errorList, last_name: {
                 error: true, 

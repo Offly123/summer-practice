@@ -29,7 +29,7 @@ export default function Form({
     action: string, 
     headText: string, 
     sendButtonText: string,
-    successRedirect: string,
+    successRedirect?: string,
     defaultValues?: Object
     children: React.ReactNode 
 }) {
@@ -81,13 +81,13 @@ export default function Form({
         });
 
         if (!res.ok) {
-            console.error('Something went wrong');
+            console.error('Form component error');
             return;
         }
 
         const errorList: Object = await res.json();
         
-        console.log(errorList);
+
         let anyErrors: boolean = false;
         Object.keys(errorList).map((elem: string) => {
             if (errorList[elem].error) {
@@ -95,12 +95,15 @@ export default function Form({
             }
         });
 
-        if (!anyErrors) {
+        if (!anyErrors && successRedirect) {
             window.location.href = successRedirect;
         }
 
+        
         setFormData(formData);
         setErrorList(errorList);
+
+        console.log(errorList);
     }
 
     

@@ -1,19 +1,11 @@
 // Компонент продукта, поулчает Object
 'use client'
 
-
 import style from '@/shop/productCard.module.scss';
 
 
-interface Product {
-    name: string,
-    description: string,
-    src: string,
-    cost: string
-}
-
-export default function ProductCard({product}) {
-
+export default function ProductCard( {product}: {product: Product}) {
+    
     return (
         <div className={style.productCard}>
             <div className={style.imageWrap}>
@@ -29,4 +21,15 @@ export default function ProductCard({product}) {
         </div>
     )
 
+}
+
+export type {
+    Product
+}
+
+interface Product {
+    name: string,
+    description: string,
+    src: string,
+    cost: string
 }

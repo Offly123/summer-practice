@@ -6,7 +6,11 @@ export default function Custom404() {
             <p>
                 404 Страница не найдена
             </p>
-            <a href="./" className={style.a}>На главную</a>
+            <a href="./" className={style.a}><p>
+
+            На главную
+            </p>
+            </a>
         </>
     )
 }

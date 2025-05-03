@@ -10,20 +10,12 @@ $nav-item-margin: clamp(1px, 1vw, 3px);
     align-items: center;
     list-style: none;
     text-wrap: nowrap;
-    font-size:  clamp(6px, 4vw, 20px);
+    font-size:  clamp(8px, 3.5vw, 20px);
 
     @media screen and (min-width: $max-phone) {
         height: 100%;
     }
-}
-
-.ul {
-    display: flex;
-    align-items: center;
-    list-style: none;
-    padding: 0 5px;
-    height: 100%;
-
+    
     a {
         display: flex;
         align-items: center;
@@ -33,11 +25,11 @@ $nav-item-margin: clamp(1px, 1vw, 3px);
         height: clamp(20px, 50%, 30px);
         transition: background-color 0.1s;
     }
-
+    
     a:hover {
         background-color: $nav-hover;
     }
-
+    
     a:nth-child(n+2)::before {
         content: '';
         pointer-events: none;
@@ -46,12 +38,12 @@ $nav-item-margin: clamp(1px, 1vw, 3px);
         cursor: default;
         height: clamp(25px, 120%, 50px);
         background-color: #ffb179;
-
+        
         width: $line-width;
         left: calc(($nav-item-margin + $line-width / 2) * -1);
-        @media screen and (min-width: $max-phone) {
-            width: $line-width * 2;
-            left: calc(($nav-item-margin + $line-width) * -1);
-        }
+        // @media screen and (min-width: $max-phone) {
+        //     width: $line-width * 2;
+        //     left: calc(($nav-item-margin + $line-width) * -1);
+        // }
     }
 }
