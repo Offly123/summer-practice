@@ -1,12 +1,10 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import FormHead from '$/FormHead';
 import FormEnd from '$/FormEnd';
 import FormError from '$/FormError';
-
-import { FormResponse } from 'app/api/login/route';
 
 import style from '@/form/form.module.scss';
 import RadioInput from './RadioInput';
@@ -21,22 +19,24 @@ export interface FormData {
 }
 
 export default function Form({ 
-    action, 
-    headText, 
+    action,
+    headText,
     sendButtonText,
-    successRedirect, 
+    successRedirect,
+    defaultValues,
     children,
 }: { 
     action: string, 
     headText: string, 
     sendButtonText: string,
     successRedirect: string,
+    defaultValues?: Object
     children: React.ReactNode 
 }) {
 
     // Создаём состояние для всех полей формы
     const [formData, setFormData] = useState(() => {
-        let fieldList: FormResponse = {};
+        let fieldList: Object = {};
         React.Children.forEach(children, (child: Object) => {
             fieldList[child.props.name] = {error: false, message: ''};
         })
@@ -56,8 +56,16 @@ export default function Form({
     }
 
 
+    // Если переданы стандартные значения полей
+    useEffect(() => {
+        if (defaultValues) {
+            setFormData({...defaultValues})
+        }
+    }, [defaultValues]);
+
+
     // Состояние для списка ошибок
-    const [errorList, setErrorList] = useState<FormResponse>({});
+    const [errorList, setErrorList] = useState<Object>({});
 
 
     // При отправке меняем состояние
@@ -77,7 +85,7 @@ export default function Form({
             return;
         }
 
-        const errorList: FormResponse = await res.json();
+        const errorList: Object = await res.json();
         
         console.log(errorList);
         let anyErrors: boolean = false;
@@ -109,6 +117,7 @@ export default function Form({
                             return child;
                         }
                         return React.cloneElement(child, {
+                            defaultValue: defaultValues ? defaultValues[child.props.name] : undefined,
                             value: formData[child.props.name],
                             onChange: changeState,
                             error: errorList[child.props.name]

@@ -12,8 +12,8 @@ export default function RadioInput({
     children
 }: {
     label: string,
-    onChange: Function,
-    children: React.ReactNode
+    onChange?: Function,
+    children?: React.ReactNode
 }) {
 
     const [ isChecked, setIsChecked ] = useState(() => {

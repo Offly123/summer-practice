@@ -3,7 +3,21 @@
 import style from '@/form/radioButton.module.scss'
 
 
-export default function RadioButton({label, name, value, checked, onChange, error}) {
+export default function RadioButton({
+    label, 
+    name, 
+    value, 
+    checked, 
+    onChange, 
+    error
+} : {
+    label: string,
+    name: string,
+    value: string,
+    checked?: boolean,
+    onChange?: Function,
+    error?: boolean
+}) {
 
     const foo = () => {
         console.log('hehe');

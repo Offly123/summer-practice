@@ -57,28 +57,26 @@ const createJWT = (payload: Object, secret: string, lifeTime: number): string =>
 }
 
 
-const decodeJWT = (jwt: string): Object => {
-    let decoded: Object = {};
-    try {
-        const jwtSplitted: Array<string> = jwt.split('.');
-        const decodedHeader = Buffer.from(jwt[0], 'base64url').toString('utf8');
-        decoded['header'] = JSON.parse(decodedHeader);
-        const decodedPayload = Buffer.from(jwt[1], 'base64url').toString('utf8');
-        decoded['payload'] = JSON.parse(decodedPayload);
-        return decoded;
-    } catch {
-        return {...decoded, error: true};
-    }
+const decodeJWT = (jwt: string): JWT => {
+    const jwtSplitted: Array<string> = jwt.split('.');
+    const decodedHeader = Buffer.from(jwtSplitted[0], 'base64url').toString('utf8');
+    const decodedPayload = Buffer.from(jwtSplitted[1], 'base64url').toString('utf8');
+    let decoded: JWT = {
+        header: JSON.parse(decodedHeader),
+        payload: JSON.parse(decodedPayload),
+        signature: jwtSplitted[2]
+    };
+    return decoded;
 }
 
 
-const isValideJWT = (decoded: JWT, secret: string): boolean => {
+const isValideJWT = (decoded: JWT, secret: string | undefined): boolean => {
     // Если JWT пустой
     if (!decoded ||  Object.keys(decoded).length === 0) {
         return false;
     }
     // Если не передали ключ (в БД нет такого)
-    if (!secret || secret === '') {
+    if (!secret) {
         return false;
     }
     // Если истекла дата - невалидный
@@ -89,7 +87,7 @@ const isValideJWT = (decoded: JWT, secret: string): boolean => {
     const base64Header = Buffer.from(JSON.stringify(decoded.header)).toString('base64url');
     const base64Payload = Buffer.from(JSON.stringify(decoded.payload)).toString('base64url');
     
-    return createSignature(base64Header, base64Payload, secret) === decoded[2];
+    return createSignature(base64Header, base64Payload, secret) === decoded.signature;
 }
 
 export type { 

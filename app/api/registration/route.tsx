@@ -9,8 +9,18 @@ import { getSHA256, connectToDB } from '../db';
 import { createJWT } from '../jwt';
 
 
+interface RegistrationData {
+    client_login: string,
+    client_password: string,
+    first_name: string,
+    last_name: string,
+    phone_number: string,
+    email: string,
+    gender: string
+}
+
 export async function POST(req: Request): Promise<Response> {
-    const registrationData: Object = await req.json();
+    const registrationData: RegistrationData = await req.json();
     
     
     const errorList = getErrorList(registrationData);
@@ -85,25 +95,25 @@ const getErrorList = (registrationData): FormData => {
         errorList = {
             ...errorList, client_login: {
                 error: true, 
-                message: 'Логин должен состоять только из букв латинского алфавита и _'
+                message: 'Логин должен состоять только из букв латинского алфавита, цифр и _'
             }
         };
     }
 
-    if ( !(/^[a-zA-Z0-9_]$/).test(registrationData.client_password) || (registrationData.client_password.length < 8) ) {
+    if ( !(/^[a-zA-Z0-9_]+$/).test(registrationData.client_password) || (registrationData.client_password.length < 8) ) {
         errorList = {
             ...errorList, client_password: {
                 error: true, 
-                message: 'Пароль должен состоять только из букв латинского алфавита и _'
+                message: 'Пароль должен состоять только из букв латинского алфавита, цифр и _'
             }
         };
     }
 
-    if (!(/^[а-яА-ЯеЁ\s-]+$/).test(registrationData.first_name)) {
+    if (!(/^[а-яА-ЯеЁ\-]+$/).test(registrationData.first_name)) {
         errorList = {
             ...errorList, first_name: {
                 error: true, 
-                message: 'Имя может содержать только кириллические буквы, пробелы и тире'
+                message: 'Имя может содержать только кириллические буквы и тире'
             }
         };
     }
@@ -112,7 +122,7 @@ const getErrorList = (registrationData): FormData => {
         errorList = {
             ...errorList, last_name: {
                 error: true, 
-                message: 'Фамилия может содержать только кириллические буквы, пробелы и тире'
+                message: 'Фамилия может содержать только кириллические буквы и тире'
             }
         };
     }
@@ -135,7 +145,7 @@ const getErrorList = (registrationData): FormData => {
         };
     }
 
-    if (!registrationData.gender) {
+    if (registrationData.gender !== 'male' && registrationData.gender !== 'female') {
         errorList = {
             ...errorList, gender: {
                 error: true,

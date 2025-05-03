@@ -2,12 +2,21 @@
 
 import style from '@/form/textInput.module.scss'
 
-export default function TextInput({label, type, name, onChange, error}) {
+interface TextInputProps {
+    label: string,
+    defaultValue?: string,
+    type: string,
+    name: string,
+    onChange?: Function,
+    error?: boolean
+}
+
+export default function TextInput({label, defaultValue, type, name, onChange, error = false}: TextInputProps) {
 
     return (
         <div className={`${style.field} ${error ? style.errored : ''}`}>
             <label htmlFor={name}>{label}:</label>
-            <input name={name} type={type} placeholder={label} onChange={onChange}/>
+            <input name={name} type={type} defaultValue={defaultValue} placeholder={label} onChange={onChange}/>
         </div>
     )
 }
