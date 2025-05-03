@@ -7,7 +7,7 @@ import Form from '$/Form';
 export default function Login() {
 
     return (
-        <Form action='/api/login' headText='Вход' sendButtonText='Отправить' successRedirect='/about/'>
+        <Form action='/api/login' headText='Вход' sendButtonText='Отправить' successRedirect='/profile/'>
             <TextInput error={false} onChange={undefined} name='client_login' label='Логин' type='text' />
             <TextInput error={false} onChange={undefined} name='client_password' label='Пароль' type='password' />
         </Form>

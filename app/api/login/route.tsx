@@ -59,7 +59,7 @@ export async function POST(req: Request): Promise<Response> {
     const cookieStore = await cookies();
 
     // Генерируем JWT и вставляем в куки
-    const clientId = answerDB[0][0].client_id;
+    const clientId = answerDB.client_id;
     const jwtLifeTime = 60 * 60 * 24 * 14; // 2 недели
     const jwtSecret: any = process.env.JWTSECRET;
     const JWT = createJWT({clientId: clientId}, jwtSecret, jwtLifeTime);

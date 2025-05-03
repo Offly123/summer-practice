@@ -21,7 +21,6 @@ export default function Update() {
             });
             if (res.ok) {
                 let fetchData = await res.json();
-                console.log(fetchData);
                 setDefaultValues(fetchData);
             }
         };

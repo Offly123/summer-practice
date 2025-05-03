@@ -81,7 +81,7 @@ export default function Form({
         });
 
         if (!res.ok) {
-            console.error('Form component error');
+            console.error('Form response error');
             return;
         }
 
@@ -102,8 +102,6 @@ export default function Form({
         
         setFormData(formData);
         setErrorList(errorList);
-
-        console.log(errorList);
     }
 
     

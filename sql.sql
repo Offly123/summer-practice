@@ -9,6 +9,13 @@ CREATE TABLE clients (
     gender          ENUM('male', 'female')
 );
 
+CREATE TABLE client_addresses (
+    client_id       INT NOT NULL,
+    client_address  VARCHAR(50) NOT NULL,
+    PRIMARY KEY (client_id, client_address),
+    FOREIGN KEY (client_id) REFERENCES clients(client_id) ON DELETE CASCADE
+);
+
 CREATE TABLE products (
     product_id          INT AUTO_INCREMENT PRIMARY KEY,
     product_name        VARCHAR(50),
@@ -16,6 +23,14 @@ CREATE TABLE products (
     src                 VARCHAR(50),
     product_description VARCHAR(100)
 );
+
+--Очистить все таблицы (кроме products)
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE clients;
+TRUNCATE client_addresses;
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 
 
@@ -41,6 +56,19 @@ WHERE client_id=?
 
 
 
+-- CLIENT_ADDRESSES
+
+-- Вставка нового адреса
+INSERT IGNORE INTO client_addresses
+    (client_id, client_address)
+values (?, ?);
+
+-- Получение всех адресов клиента
+SELECT client_address FROM client_addresses
+WHERE client_id = ?
+
+
+
 -- PRODUCTS
 
 -- Вставить тестовые продукты
@@ -61,4 +89,8 @@ INSERT IGNORE INTO products
 VALUES('Milk', 70, '/products/milk.png', 'Milk milk');
 
 -- Получить список всех продуктов
-SELECT product_name, cost, src, product_description FROM products
+SELECT * FROM products
+
+-- Получить данные одного продукта
+SELECT * FROM products
+WHERE product_id=?

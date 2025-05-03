@@ -1,27 +1,22 @@
 // Компонент продукта, поулчает Object
 'use client'
 
-import style from '@/shop/productCard.module.scss';
+import style from '@/cart/cartItem.module.scss';
 import { getCookies } from 'app/api/cook';
+import { projectUpdate } from 'next/dist/build/swc/generated-native';
 
 
 
-export default function ProductCard( {product}: {product: Product}) {
-    
-    const addToCart = () => {
-        let cart = getCookies().cart;
-        
-        if (!cart) {
-            document.cookie = `cart=${JSON.stringify([product.id])}`;
-            return;
-        }
-        cart = JSON.parse(cart);
-
-        document.cookie = `cart=${JSON.stringify([...cart, product.id])}`;
-    }
+export default function CartItem( {
+    onClick,
+    product
+}: {
+    onClick: Function,
+    product: Product
+}) {
     
     return (
-        <div className={style.productCard}>
+        <div className={style.cartItem}>
             <div className={style.imageWrap}>
                 <img 
                     height={'150px'} 
@@ -32,7 +27,7 @@ export default function ProductCard( {product}: {product: Product}) {
             <h2>{ product.name }</h2>
             <p>{ product.description }</p>
             <div className={style.cardEnd}>
-                <button onClick={addToCart}>+</button>
+                <button onClick={onClick.bind(null, product)}>-</button>
                 <p>{ product.cost }&#x20bd;</p>
             </div>
         </div>
@@ -45,7 +40,6 @@ export type {
 }
 
 interface Product {
-    render_id: number
     id: string,
     name: string,
     description: string,

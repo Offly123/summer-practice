@@ -4,10 +4,11 @@ import { connectToDB } from "../db"
 import { Product } from "$/ProductCard";
 
 interface DBProduct {
+    product_id: string,
     product_name: string,
-    cost: number,
+    cost: string,
     src: string,
-    procuct_description: string
+    product_description: string
 }
 
 export async function GET(req: Request): Promise<Response> {
@@ -17,9 +18,9 @@ export async function GET(req: Request): Promise<Response> {
         return connection;
     }
 
-    let dbProductList: DBResponse;
+    let dbProductList: DBProduct;
     const sqlProductList = `
-    SELECT product_name, cost, src, product_description FROM products
+    SELECT * FROM products
     `;
     try {
         dbProductList = await connection.execute(sqlProductList);
@@ -39,6 +40,7 @@ const toProductInterface = (dbResponse: any): Product[] => {
     dbResponse.forEach((prod: DBProduct) => {
         productList = [
             ...productList, {
+                id: prod.product_id,
                 name: prod.product_name,
                 cost: prod.cost,
                 src: prod.src,

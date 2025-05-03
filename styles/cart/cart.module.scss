@@ -1,0 +1,9 @@
+@use '@/colors' as *;
+
+
+
+.empty {
+    background-color: $main;
+    padding: 5px;
+    margin: 5px;
+}

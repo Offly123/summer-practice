@@ -21,6 +21,7 @@ export default function Shop() {
             if (res.ok) {
                 const fetchData = await res.json();
                 setProductList(fetchData);
+                console.log(fetchData);
             }
         }
         fetchProducts();
@@ -29,6 +30,7 @@ export default function Shop() {
     if (!productList.length) {
         return <Loading />;
     }
+    
     return (
         <div className={style.productList}>
             {

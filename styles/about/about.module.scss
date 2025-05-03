@@ -9,11 +9,16 @@
     margin: 10px;
     width: clamp(0px, 80vw, 800px);
     transition: scale 0.1s;
+    box-shadow: 1px 1px 3px $accent;
 
     section {
         h2 {
             text-wrap: nowrap;
             font-size: clamp(10px, 5vw, 40px);
+        }
+
+        p {
+            text-align: left;
         }
     }
     
@@ -26,8 +31,6 @@
 }
 
 .about:hover {
-    scale: 1.06;
-    @media screen and (min-width: $max-phone) {
-        scale: 1.03;
-    }
+    scale: 1.02;
+    box-shadow: 3px 3px 5px $accent;
 }
