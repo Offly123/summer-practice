@@ -148,8 +148,8 @@ WHERE product_id=?;
 -- Вставить тестового курьера (password)
 INSERT IGNORE INTO couriers 
     (courier_login, courier_password, first_name, last_name, phone_number, email, gender) 
-values ("test", "XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg", "Courier", "Courier2", "88001231231", "some@mail.mail", "male");
-
+values ("test", "XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg", "CourierFirstName", "CourierLastName", "88001231231", "some@mail.mail", "male");
+    
 -- Получить пароль курьера
 SELECT courier_password FROM couriers
 WHERE courier_login=?;
@@ -165,12 +165,32 @@ FROM orders o
 JOIN ordered_products op ON o.order_id=op.order_id
 JOIN products p ON p.product_id=op.product_id
 WHERE client_id=?
+ORDER BY order_status;
+
+-- Получить список всех заказов с клиентами
+SELECT
+c.first_name, c.last_name, o.order_id, order_date, order_address, order_status, amount, product_name, cost, src, product_description
+FROM orders o 
+JOIN clients c ON o.client_id=c.client_id
+JOIN ordered_products op ON o.order_id=op.order_id
+JOIN products p ON p.product_id=op.product_id
+ORDER BY order_status;
 
 
 -- Создать заказ
 INSERT IGNORE INTO orders
     (client_id, order_date, order_address, order_status)
 VALUES (?, ?, ?, 'created');
+
+-- Сменить статус на доставляется
+UPDATE orders SETc
+    order_status = 'shipping', courier_id=?
+WHERE order_id=?
+
+-- Сменить статус на доставлен
+UPDATE orders SET
+    order_status = 'delivered', courier_id=?
+WHERE order_id=?
 
 
 

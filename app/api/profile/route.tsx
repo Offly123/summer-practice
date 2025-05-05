@@ -6,16 +6,18 @@ import { JWT, decodeJWT, isValideJWT } from "../jwt";
 import { connection } from "next/server";
 import { connectToDB, showDBError } from "../db";
 
-interface Order {
+export interface Order {
+
+    error?: boolean,
     order_id: number,
     order_date: Date,
     order_address: string,
     order_status: string,
     cost: number
-    product_list: OrderedProducts[]
+    product_list: OrderedProduct[]
 }
 
-interface OrderedProducts {
+export interface OrderedProduct {
     product_id: number,
     product_name: string,
     amount: number,
@@ -58,6 +60,7 @@ export async function POST(res: Response): Promise<Response> {
     JOIN ordered_products op ON o.order_id=op.order_id
     JOIN products p ON p.product_id=op.product_id
     WHERE client_id=?
+    ORDER BY order_status;
     `;
     const clientId = decodedJwt.payload.clientId;
     let orderList;
@@ -69,11 +72,11 @@ export async function POST(res: Response): Promise<Response> {
 
     
     // Оставь надежду всяк сюда входящий
-    let orderListBeautiful: Order[];
+    let orderListBeautiful: Order[] = [];
     orderList.forEach((order) => {
         // Если не вставлено ни одного заказа
         if (!orderListBeautiful) {
-            orderListBeautiful = [{
+            orderListBeautiful = [...orderListBeautiful, {
                 order_id: order.order_id,
                 order_date: order.order_date,
                 order_address: order.order_address,
@@ -128,15 +131,16 @@ export async function POST(res: Response): Promise<Response> {
 
 
 
+    if (!orderListBeautiful) {
+        orderListBeautiful[0] = {empty: true};
+    }
     return new Response(JSON.stringify(orderListBeautiful));
 }
 
 const getIndexByOrderId = (orderList: Order[], order_id: number) => {
     let ii = -1;
     orderList.forEach((order, index) => {
-        console.log('foreach order: ' + JSON.stringify(order));
         if (order.order_id === order_id) {
-            console.log('INSIDE IF INDEX ' + index);
             ii = index;
         }
     });

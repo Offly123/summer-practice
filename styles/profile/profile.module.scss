@@ -4,3 +4,74 @@
     background-color: $main;
     padding: 5px;
 }
+
+.h2 {
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+}
+
+.update {
+    padding: 5px;
+    background-color: $main;
+}
+
+.orderList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    
+}
+
+.orderCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 80%;
+    padding: 5px;
+    margin: 10px;
+    transition: all 0.1s;
+
+    .productList {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    p {
+        margin: 5px;
+    }
+}
+
+.orderCard:hover {
+    scale: 1.02;
+}
+
+.created {
+    background-color: $secondary;
+    box-shadow: 1px 1px 3px $accent;
+}
+
+.created:hover {
+    box-shadow: 3px 3px 3px $accent;
+}
+
+.shipping {
+    background-color: rgb(255, 157, 0);
+    box-shadow: 1px 1px 3px rgb(220, 136, 0);
+}
+
+.shipping:hover {
+    box-shadow: 3px 3px 3px rgb(220, 136, 0);
+}
+
+.delivered {
+    background-color: rgb(27, 201, 27);
+    box-shadow: 1px 1px 3px rgb(15, 153, 15);
+}
+
+.delivered:hover {
+    box-shadow: 3px 3px 3px rgb(15, 153, 15);
+}

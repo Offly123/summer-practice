@@ -26,7 +26,7 @@ export async function POST(req: Request): Promise<Response> {
 
     let answerDB;
     const sqldbHash = `
-    SELECT courier_password FROM couriers
+    SELECT courier_id, courier_password FROM couriers
     WHERE courier_login=?
     `;
     try {
@@ -58,10 +58,10 @@ export async function POST(req: Request): Promise<Response> {
     const cookieStore = await cookies();
 
     // Генерируем JWT и вставляем в куки
-    const clientId = answerDB.client_id;
+    const courierId = answerDB.courier_id;
     const jwtLifeTime = 60 * 60 * 24; // 1 день
     const jwtSecret: any = process.env.JWTSECRET;
-    const JWT = createJWT({clientId: clientId}, jwtSecret, jwtLifeTime);
+    const JWT = createJWT({courier_id: courierId}, jwtSecret, jwtLifeTime);
     cookieStore.set('courier_session', JWT, {httpOnly: true, maxAge: jwtLifeTime, path: '/'});
 
     return new Response(JSON.stringify({}));

@@ -1,6 +1,6 @@
 @use 'colors' as *;
 
-html, body, h1, h2, button, input, ul, li, a, p{
+html, body, h1, h2, h3, button, input, ul, li, a, p{
     all: unset
 }
 
@@ -28,6 +28,10 @@ h1 {
 
 h2 {
     font-size: clamp(10px, 5vw, 40px);;
+}
+
+h3 {
+    font-size: clamp(5px, 4vw, 30px);;
 }
 
 a, button {

@@ -3,12 +3,15 @@
 import { useEffect, useState } from 'react'
 
 import Loading from '$/Loading';
+import OrderCard from '$/OrderCard';
+import { Order } from 'app/api/profile/route';
 
 import style from '@/profile/profile.module.scss'
 
+
 export default function Profile() {
 
-    const [defaultValues, setDefaultValues] = useState(undefined);
+    const [orderList, setOrderList] = useState<Order[]>([]);
     useEffect(() => {
         const fetchValues = async () => {
             const res = await fetch('/api/profile', {
@@ -16,18 +19,18 @@ export default function Profile() {
             });
             if (res.ok) {
                 let fetchData = await res.json();
-                setDefaultValues(fetchData);
+                setOrderList(fetchData);
             }
         };
         
         fetchValues();
     }, [])
 
-    if (!defaultValues) {
+    if (!orderList) {
         return  <Loading />;
     }
     
-    if (defaultValues.error === true) {
+    if (orderList.error) {
         return (
             <>
                 <p>Вы не вошли в систему</p>
@@ -36,17 +39,18 @@ export default function Profile() {
         );
     }
 
+
     return (
         <>
-            <div>
-                <h2>Список заказов:</h2>
-                <div>
-                    {
-                        JSON.stringify(defaultValues)
-                    }
-                </div>
+            <a className={style.update} href="/profile/update/">Обновить данные</a>
+            <h2 className={style.h2}>Список заказов:</h2>
+            <div className={style.orderList}>
+                {
+                    orderList.map((order, index) => (
+                        <OrderCard key={index} order={order}/>
+                    ))
+                }
             </div>
-            <a href="/profile/update/">Обновить данные</a>
         </>
     )
 }

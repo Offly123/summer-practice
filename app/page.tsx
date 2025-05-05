@@ -21,7 +21,6 @@ export default function Shop() {
             if (res.ok) {
                 const fetchData = await res.json();
                 setProductList(fetchData);
-                console.log(fetchData);
             }
         }
         fetchProducts();

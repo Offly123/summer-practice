@@ -11,10 +11,14 @@ export async function POST(req: Request): Promise<Response> {
 
     const cookieStore = await cookies();
 
+    console.log('\n\n\nHEHE\n\n\n');
     // Получаем JWT из куков
     const clientJwt: string | undefined = cookieStore.get('client_session')?.value;
     if (!clientJwt) {
-        return new Response(JSON.stringify({error: true}));
+        return new Response(JSON.stringify({sssdfg: {
+            error: true,
+            message: 'Войдите в систему для оформления заказа'
+        }}));
     }
 
     // Декодируем JWT и проверяем его валидность
@@ -23,12 +27,11 @@ export async function POST(req: Request): Promise<Response> {
 
     if (!isValideJWT(decodedJwt, jwtSecret)) {
         cookieStore.delete('client_session');
-        return new Response(JSON.stringify({yo: {
+        return new Response(JSON.stringify({sssdfg: {
             error: true,
             message: 'Войдите в систему для оформления заказа'
         }}));
     }
-
 
     
     // Адрес не длиннее 100 символов
@@ -62,6 +65,20 @@ export async function POST(req: Request): Promise<Response> {
     try {
         orderId = await connection.execute(sqlCreateOrder, createOrder);
         orderId = orderId[0].insertId;
+    } catch (err) {
+        return await showDBError(connection, err);
+    }
+
+
+
+    // Добавление адреса в БД
+    const sqlInsertAddress = `
+    INSERT IGNORE INTO client_addresses 
+    (client_id, client_address) 
+    values (?, ?);
+    `;
+    try {
+        await connection.execute(sqlInsertAddress, [clientId, orderAddress]);
     } catch (err) {
         return await showDBError(connection, err);
     }
@@ -110,6 +127,8 @@ export async function POST(req: Request): Promise<Response> {
     connection.commit();
     connection.end();
 
+
+    cookieStore.delete('cart');
 
     return new Response(JSON.stringify({}));
 }

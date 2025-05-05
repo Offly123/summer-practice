@@ -1,33 +1,35 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 
 import Loading from '$/Loading';
-import Form from '$/Form';
-import TextInput from '$/TextInput';
+import CourierOrderCard from '$/CourierOrderCard';
+import { Order } from 'app/api/courier/route';
 
 import style from '@/courier/courier.module.scss';
 
 
 export default function Courier() {
-    const [defaultValues, setDefaultValues] = useState(undefined);
+    const [orderList, setOrderList] = useState<Order[]>([]);
     useEffect(() => {
         const fetchValues = async () => {
-            const res = await fetch('/api/courier/', {
+            const res = await fetch('/api/courier', {
                 method: 'POST'
             });
             if (res.ok) {
                 let fetchData = await res.json();
-                setDefaultValues(fetchData);
+                setOrderList(fetchData);
             }
         };
         
         fetchValues();
     }, [])
 
+    if (!orderList) {
+        return <Loading />
+    }
 
-    if (!defaultValues) {
+    if (orderList.error) {
         return (
             <>
                 <p>Вы не вошли в систему</p>
@@ -37,6 +39,15 @@ export default function Courier() {
     }
 
     return (
-        <>{JSON.stringify(defaultValues)}</>
+        <>
+            <h2 className={style.h2}>Список заказов:</h2>
+            <div className={style.orderList}>
+                {
+                    orderList.map((order, index) => (
+                        <CourierOrderCard key={index} order={order}/>
+                    ))
+                }
+            </div>
+        </>
     )
 }

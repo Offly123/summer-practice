@@ -79,6 +79,7 @@ export async function POST(req: Request): Promise<Response> {
     const jwtSecret: any = process.env.JWTSECRET;
     const JWT = createJWT({clientId: clientId}, jwtSecret, jwtLifeTime);
     cookieStore.set('client_session', JWT, {httpOnly: true, maxAge: jwtLifeTime, path: '/'});
+    cookieStore.delete('cart');
 
     return new Response(JSON.stringify({}));
 }

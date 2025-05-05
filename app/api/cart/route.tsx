@@ -63,7 +63,7 @@ export async function POST(req: Request): Promise<Response> {
 
 
     
-    const productList = toProductInterface(dbProductList)
+    const productList = toProductInterface(dbProductList);
 
     return new Response(JSON.stringify(productList));
 }
