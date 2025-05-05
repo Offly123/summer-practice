@@ -85,7 +85,7 @@ export async function POST(req: Request): Promise<Response> {
 }
 
 
-export const getErrorList = async (registrationData: RegistrationData): Promise<FormData> => {
+const getErrorList = async (registrationData: RegistrationData): Promise<FormData> => {
 
     let errorList: FormData = {};
 

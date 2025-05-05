@@ -1,6 +1,7 @@
 'use client'
 
 import style from '@/form/radioButton.module.scss'
+import { ChangeEventHandler } from 'react';
 
 
 export default function RadioButton({
@@ -15,7 +16,7 @@ export default function RadioButton({
     name: string,
     value: string,
     checked?: boolean,
-    onChange?: Function,
+    onChange?: ChangeEventHandler<HTMLInputElement>,
     error?: boolean
 }) {
 

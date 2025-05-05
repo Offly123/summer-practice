@@ -14,7 +14,7 @@ import style from '@/cart/cart.module.scss'
 
 export default function Cart() {
 
-    const [productList, setProductList] = useState([]);
+    const [productList, setProductList] = useState<Array<{[key: string]: any}>>([]);
     
     useEffect(() => {
         const fetchProducts = async () => {
@@ -35,14 +35,14 @@ export default function Cart() {
 
     const removeFromCart = (product: Product) => {
         // Получаем печенье
-        let cart = getCookies().cart;
+        let cart: string = getCookies().cart;
         if (cart.constructor === String) {
             cart = JSON.parse(cart);
         }
         
 
         // Удаляем из печенья тыкнутый элемент
-        cart.splice(cart.indexOf(product.id), 1);
+        cart.slice(cart.indexOf(product.id), 1);
 
 
         // Удаляем из productList тыкнутый элемент
@@ -64,7 +64,7 @@ export default function Cart() {
         return <Loading />;
     }
 
-    if (productList[0].empty || productList.empty) {
+    if (productList[0].empty || !productList.length) {
         return (
             <>
                 <p>Корзина пуста</p>
@@ -77,7 +77,7 @@ export default function Cart() {
         <>
             <div>
                 {
-                    productList.map((product, index) => {
+                    productList.map((product: any, index) => {
                         return (
                             <CartItem onClick={removeFromCart} key={index} product={product} />
                         )

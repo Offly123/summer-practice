@@ -39,11 +39,12 @@ const toProductInterface = (dbResponse: any): Product[] => {
     dbResponse.forEach((prod: DBProduct) => {
         productList = [
             ...productList, {
+                render_id: 1,
                 id: prod.product_id,
                 name: prod.product_name,
                 cost: prod.cost,
                 src: prod.src,
-                description: prod.product_description
+                description: prod.product_description,
             }
         ];
     });

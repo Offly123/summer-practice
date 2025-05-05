@@ -25,13 +25,13 @@ export interface OrderedProduct {
     src: string,
 }
 
-export async function POST(res: Response): Promise<Response> {
+export async function POST(res: Request): Promise<Response> {
     const cookieStore = await cookies();
 
     // Получаем JWT из куков
     const clientJwt: string | undefined = cookieStore.get('client_session')?.value;
     if (!clientJwt) {
-        return new Response(JSON.stringify({error: true, message: 'No jwt'}));
+        return new Response(JSON.stringify([{error: true, message: 'No jwt'}]));
     }
 
     // Декодируем JWT и проверяем его валидность
@@ -40,7 +40,7 @@ export async function POST(res: Response): Promise<Response> {
 
     if (!isValideJWT(decodedJwt, jwtSecret)) {
         cookieStore.delete('client_session');
-        return new Response(JSON.stringify({error: true, message: 'Invalid jwt'}));
+        return new Response(JSON.stringify([{error: true, message: 'Invalid jwt'}]));
     }
 
 
@@ -132,7 +132,7 @@ export async function POST(res: Response): Promise<Response> {
 
 
     if (!orderListBeautiful) {
-        orderListBeautiful[0] = {empty: true};
+        return new Response(JSON.stringify([{empty: true}]));
     }
     return new Response(JSON.stringify(orderListBeautiful));
 }

@@ -9,6 +9,10 @@ import FormError from '$/FormError';
 import style from '@/form/form.module.scss';
 import RadioInput from './RadioInput';
 
+interface ChildProps {
+    [key: string]: any
+}
+
 interface FieldResponse {
     error: boolean,
     message: string,
@@ -37,8 +41,11 @@ export default function Form({
     // Создаём состояние для всех полей формы
     const [formData, setFormData] = useState(() => {
         let fieldList: Object = {};
-        React.Children.forEach(children, (child: Object) => {
-            fieldList[child.props.name] = {error: false, message: ''};
+        React.Children.forEach(children, (child: React.ReactElement) => {
+            const { name } = child.props as { name: string };
+            if (name) {
+                fieldList[name] = {error: false, message: ''};
+            }
         })
         return fieldList;
     });
@@ -65,7 +72,7 @@ export default function Form({
 
 
     // Состояние для списка ошибок
-    const [errorList, setErrorList] = useState<Object>({});
+    const [errorList, setErrorList] = useState<FormData>({});
 
 
     // При отправке меняем состояние
@@ -85,7 +92,7 @@ export default function Form({
             return;
         }
 
-        const errorList: Object = await res.json();
+        const errorList: FormData = await res.json();
         
 
         let anyErrors: boolean = false;
@@ -113,15 +120,16 @@ export default function Form({
             <div className={style.main}>
                 <FormError errorList={errorList} />
                 {
-                    React.Children.map(children, (child) => {
-                        if (!React.isValidElement(child)) {
+                    React.Children.map(children, (child: React.ReactElement) => {
+                        const { name } = child.props as { name: string };
+                        if (!React.isValidElement<ChildProps>(child)) {
                             return child;
                         }
                         return React.cloneElement(child, {
-                            defaultValue: defaultValues ? defaultValues[child.props.name] : undefined,
-                            value: formData[child.props.name],
+                            defaultValue: defaultValues ? defaultValues[child[name]] : undefined,
+                            value: formData[child[name]],
                             onChange: changeState,
-                            error: errorList[child.props.name]
+                            error: errorList[child[name]]
                         })
                     })
                 }

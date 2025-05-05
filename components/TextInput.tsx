@@ -1,13 +1,14 @@
 'use client'
 
 import style from '@/form/textInput.module.scss'
+import { ChangeEvent, ChangeEventHandler } from 'react'
 
 interface TextInputProps {
     label: string,
     defaultValue?: string,
     type: string,
     name: string,
-    onChange?: Function,
+    onChange?: ChangeEventHandler<HTMLInputElement>,
     error?: boolean
 }
 

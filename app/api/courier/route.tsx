@@ -32,7 +32,7 @@ export async function POST(req: Request): Promise<Response> {
     // Получаем JWT из куков
     const clientJwt: string | undefined = cookieStore.get('courier_session')?.value;
     if (!clientJwt) {
-        return new Response(JSON.stringify({error: true}));
+        return new Response(JSON.stringify([{error: true}]));
     }
 
     // Декодируем JWT и проверяем его валидность
@@ -41,7 +41,7 @@ export async function POST(req: Request): Promise<Response> {
 
     if (!isValideJWT(decodedJwt, jwtSecret)) {
         cookieStore.delete('courier_session');
-        return new Response(JSON.stringify({error: true}));
+        return new Response(JSON.stringify([{error: true}]));
     }
 
 

@@ -29,7 +29,7 @@ export default function Courier() {
         return <Loading />
     }
 
-    if (orderList.error) {
+    if (orderList[0] && orderList[0].error) {
         return (
             <>
                 <p>Вы не вошли в систему</p>

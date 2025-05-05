@@ -6,6 +6,10 @@ import { FormData } from '$/Form';
 
 import style from '@/form/radioInput.module.scss';
 
+interface ChildProps {
+    [key: string]: any;
+}
+
 export default function RadioInput({
     label,
     onChange,
@@ -18,8 +22,9 @@ export default function RadioInput({
 
     const [ isChecked, setIsChecked ] = useState(() => {
         let radioButtons = {};
-        React.Children.forEach(children, (child) => {
-            radioButtons[child.props.value] = false;
+        React.Children.forEach(children, (child: React.ReactElement) => {
+            const { name } = child.props as { name: string };
+            radioButtons[child[name]] = false;
         });
         return radioButtons;
     });
@@ -28,8 +33,9 @@ export default function RadioInput({
         console.log(isChecked);
         const { value } = event.target;
         const newState = {};
-        React.Children.forEach(children, (child) => {
-            newState[child.props.value] = (child.props.value === value);
+        React.Children.forEach(children, (child: React.ReactElement) => {
+            const { value } = child.props as { value: string };
+            newState[child[value]] = (child.props[value]=== value);
         });
         setIsChecked(newState);
     }
@@ -41,12 +47,13 @@ export default function RadioInput({
             </label>
             <div className={style.buttons}>
                 {
-                    React.Children.map(children, (child) => (
-                        React.cloneElement(child, {
-                            checked: isChecked[child.props.name], 
+                    React.Children.map(children, (child: React.ReactElement) => {
+                        const { name } = child.props as { name: string };
+                        return React.cloneElement<ChildProps>(child, {
+                            checked: isChecked[child[name]], 
                             onChange: onChange
                         })
-                    ))
+                    })
                 }
             </div>
         </div>

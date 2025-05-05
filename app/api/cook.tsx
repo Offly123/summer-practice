@@ -1,6 +1,6 @@
 'use client'
 
-export function getCookies(): Object {
+export function getCookies(): {[key: string]: any} {
     const cookieArray: Array<string> = document.cookie.split('; ');
     let cookieObject: Object = {};
     cookieArray.forEach((cook) => {

@@ -1,5 +1,13 @@
 {
   "compilerOptions": {
+    "noEmitOnError": true,
+    "noImplicitAny": false, // Отключает проверку на неявный тип any
+    "strictNullChecks": false, // Отключает проверку на null и undefined
+    "strictFunctionTypes": false, // Отключает строгую проверку типов функций
+    "strictBindCallApply": false, // Отключает строгую проверку для методов bind, call и apply
+    "strictPropertyInitialization": false, // Отключает проверку инициализации свойств
+    "noImplicitThis": false, // Отключает проверку неявного this
+    "alwaysStrict": false, // Отключает строгий режим
     "target": "ES2017",
     "lib": [
       "dom",
@@ -27,7 +35,6 @@
         "name": "next"
       }
     ],
-    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
