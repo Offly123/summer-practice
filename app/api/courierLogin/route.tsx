@@ -13,8 +13,7 @@ interface CourierLoginData {
 
 export async function POST(req: Request): Promise<Response> {
     const loginData: CourierLoginData = await req.json();
-
-    console.log(loginData);
+    
 
     const connection = await connectToDB();
 
