@@ -160,10 +160,11 @@ WHERE courier_login=?;
 
 -- Получить список заказов клиента
 SELECT
-    client_id, order_date, order_address, order_status, amount, product_id
+o.order_id, order_date, order_address, order_status, amount, product_name, cost, src, product_description
 FROM orders o 
-JOIN ordered_products op ON o.order_id=op.order_id;
-WHERE client_id=?;
+JOIN ordered_products op ON o.order_id=op.order_id
+JOIN products p ON p.product_id=op.product_id
+WHERE client_id=?
 
 
 -- Создать заказ
