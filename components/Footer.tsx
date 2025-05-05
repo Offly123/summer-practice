@@ -9,7 +9,8 @@ export default function Footer() {
     return (
         <footer className={style.footer}>
             <p>
-                &copy; { new Date().getFullYear() } КубГУ.Доставка. Все права атакованы.
+                &copy; { new Date().getFullYear() } КубГУ.Доставка. Все права атакованы.<br />
+                <a className={style.about} href="/about/">О нас</a>
             </p>
         </footer>
     )

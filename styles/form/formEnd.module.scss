@@ -6,11 +6,11 @@ $padding: 5px;
 .end {
     display: flex;
     flex-direction: row-reverse;
-    align-self: end;
+    align-self: flex-end;
     margin: $margin;
     padding: $padding;
     width: calc(100% - $margin * 2 - $padding * 2);
-    justify-content: end;
+    justify-content: flex-end;
 
     button {
         background-color: $background;

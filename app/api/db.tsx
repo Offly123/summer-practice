@@ -23,3 +23,13 @@ export async function connectToDB(): Promise<any> {
 
     return connection;
 }
+
+export async function showDBError(connection: any, err: any): Promise<Response> {
+    await connection.rollback();
+    await connection.end();
+    console.log(err);
+    return new Response(JSON.stringify({sssdfg: {
+        error: true,
+        message: 'Что-то пошло не так'
+    }}));
+}

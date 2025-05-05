@@ -11,7 +11,7 @@ export default function Navbar() {
             <a href="/profile/">Профиль</a>
             <a href="/login/">Вход</a>
             <a href="/registration/">Регистрация</a>
-            <a href="/about/">О нас</a>
+            <a href="/courier/">Курьеру</a>
         </nav>
     )
 }

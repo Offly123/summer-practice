@@ -5,14 +5,16 @@ import { cookies } from 'next/headers';
 import { getSHA256, connectToDB, showDBError } from '../db';
 import { createJWT } from '../jwt';
 
-interface LoginData {
-    client_login: string,
-    client_password: string
+interface CourierLoginData {
+    courier_login: string,
+    courier_password: string
 }
 
 
 export async function POST(req: Request): Promise<Response> {
-    const loginData: LoginData = await req.json();
+    const loginData: CourierLoginData = await req.json();
+
+    console.log(loginData);
 
     const connection = await connectToDB();
 
@@ -24,11 +26,11 @@ export async function POST(req: Request): Promise<Response> {
 
     let answerDB;
     const sqldbHash = `
-    SELECT client_password, client_id FROM clients
-    WHERE client_login=?
+    SELECT courier_password FROM couriers
+    WHERE courier_login=?
     `;
     try {
-        answerDB = await connection.execute(sqldbHash, [loginData.client_login]);
+        answerDB = await connection.execute(sqldbHash, [loginData.courier_login]);
         answerDB = answerDB[0][0];
     } catch (err) {
         return await showDBError(connection, err);
@@ -40,11 +42,11 @@ export async function POST(req: Request): Promise<Response> {
 
     // Если неправильный логин/пароль - возвращаем ошибку
     if (!answerDB || 
-        !loginData.client_password || 
-        isEmpty(loginData.client_password) || 
-        getSHA256(loginData.client_password) !== answerDB.client_password
+        !loginData.courier_password || 
+        isEmpty(loginData.courier_password) || 
+        getSHA256(loginData.courier_password) !== answerDB.courier_password
     ) {
-        return new Response(JSON.stringify({client_password: {
+        return new Response(JSON.stringify({courier_password: {
             error: true,
             message: 'Неправильный логин или пароль'
         }}))
@@ -57,10 +59,10 @@ export async function POST(req: Request): Promise<Response> {
 
     // Генерируем JWT и вставляем в куки
     const clientId = answerDB.client_id;
-    const jwtLifeTime = 60 * 60 * 24 * 14; // 2 недели
+    const jwtLifeTime = 60 * 60 * 24; // 1 день
     const jwtSecret: any = process.env.JWTSECRET;
     const JWT = createJWT({clientId: clientId}, jwtSecret, jwtLifeTime);
-    cookieStore.set('client_session', JWT, {httpOnly: true, maxAge: jwtLifeTime, path: '/'});
+    cookieStore.set('courier_session', JWT, {httpOnly: true, maxAge: jwtLifeTime, path: '/'});
 
     return new Response(JSON.stringify({}));
 }

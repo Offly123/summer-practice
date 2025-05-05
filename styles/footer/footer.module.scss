@@ -9,4 +9,9 @@
     color: $secondary-text;
     height: 100px;
     font-size: clamp(5px, 4vw, 20px);
+
+    .about {
+        text-decoration: underline 3px;
+        text-underline-offset: 2px;
+    }
 }

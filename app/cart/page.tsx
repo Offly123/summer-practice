@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react";
 
 import { getCookies } from "app/api/cook"
+import Form from "$/Form";
+import TextInput from "$/TextInput";
 import Loading from "$/Loading";
 import CartItem from "$/CartItem";
+import { Product } from "$/ProductCard";
 
 import style from '@/cart/cart.module.scss'
-import { Product } from "$/ProductCard";
 
 
 export default function Cart() {
@@ -72,14 +74,19 @@ export default function Cart() {
     }
 
     return (
-        <div>
-            {
-                productList.map((product, index) => {
-                    return (
-                        <CartItem onClick={removeFromCart} key={index} product={product} />
-                    )
-                })
-            }
-        </div>
+        <>
+            <div>
+                {
+                    productList.map((product, index) => {
+                        return (
+                            <CartItem onClick={removeFromCart} key={index} product={product} />
+                        )
+                    })
+                }
+            </div>
+            <Form action='/api/order' headText='Оформление' sendButtonText='Заказать' successRedirect='/profile/'>
+                <TextInput error={false} onChange={undefined} name='order_address' label='Адрес Доставки' type='text' />
+            </Form>
+        </>
     )
 }

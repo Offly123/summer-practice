@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 
-import { connectToDB } from '../db';
+import { connectToDB, showDBError } from '../db';
 import { FormData } from '$/Form';
 import { JWT, decodeJWT, isValideJWT } from '../jwt';
 import { redirect } from 'next/dist/server/api-utils';
@@ -21,7 +21,7 @@ export async function POST(req: Request): Promise<Response> {
 
 
     // Получаем JWT из куков
-    const clientJwt: string | undefined = cookieStore.get('session')?.value;
+    const clientJwt: string | undefined = cookieStore.get('client_session')?.value;
     if (!clientJwt) {
         return new Response(JSON.stringify({error: true, message: 'No jwt'}));
     }
@@ -31,7 +31,7 @@ export async function POST(req: Request): Promise<Response> {
     const jwtSecret: string | undefined = process.env.JWTSECRET;
 
     if (!isValideJWT(decodedJwt, jwtSecret)) {
-        cookieStore.delete('session');
+        cookieStore.delete('client_session');
         return new Response(JSON.stringify({error: true, message: 'Invalid jwt'}));
     }
 
@@ -71,8 +71,7 @@ export async function POST(req: Request): Promise<Response> {
     try {
         await connection.execute(sqlUpdateInfo, updateInfo)
     } catch (err) {
-        console.log(err);
-        return new Response(JSON.stringify({error: true}));
+        return await showDBError(connection, err);
     }
 
 

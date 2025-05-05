@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 
 import { FormData } from '$/Form';
 
-import { getSHA256, connectToDB } from '../db';
+import { getSHA256, connectToDB, showDBError } from '../db';
 import { createJWT } from '../jwt';
 
 
@@ -60,10 +60,7 @@ export async function POST(req: Request): Promise<Response> {
     try {
         DBResponse = await connection.execute(sqlInsertRegistration, insertRegistration);
     } catch (err) {
-        return new Response(JSON.stringify({ssdfg: {
-            error: true,
-            message: 'Что-то пошло не так'
-        }}))
+        return await showDBError(connection, err);
     }
 
 
@@ -81,7 +78,7 @@ export async function POST(req: Request): Promise<Response> {
     const jwtLifeTime = 60 * 60 * 24 * 14; // 2 недели
     const jwtSecret: any = process.env.JWTSECRET;
     const JWT = createJWT({clientId: clientId}, jwtSecret, jwtLifeTime);
-    cookieStore.set('session', JWT, {httpOnly: true, maxAge: jwtLifeTime, path: '/'});
+    cookieStore.set('client_session', JWT, {httpOnly: true, maxAge: jwtLifeTime, path: '/'});
 
     return new Response(JSON.stringify({}));
 }
@@ -136,7 +133,7 @@ export const getErrorList = async (registrationData: RegistrationData): Promise<
         };
     }
 
-    if (!(/^[0-9a-zA-Z\-_]+@[0-9a-zA-Z\-_]+\.[0-9a-zA-Z\-_]+$/).test(registrationData.email)) {
+    if (!(/^[0-9a-zA-Z\-\._]+@[0-9a-zA-Z\-_]+\.[0-9a-zA-Z\-_]+$/).test(registrationData.email)) {
         errorList = {
             ...errorList, email: {
                 error: true, 

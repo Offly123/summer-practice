@@ -1,7 +1,57 @@
 @use '@/colors' as *;
 
 .cartItem {
+    $margin: 10px;
     display: flex;
+    justify-content: space-between;
+    min-height: 75px;
+    width: calc(95% - $margin * 2);
+    padding: 5px;
+    margin: $margin;
     align-items: center;
     background-color: $secondary;
+    box-shadow: 1px 1px 5px $accent;
+    transition: all 0.1s;
+
+    .imageWrap {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+
+        img {
+            
+        }
+    }
+
+    h2 {
+        margin: 5px;
+        flex: 4;
+        text-align: left;
+        text-wrap: word;
+    }
+
+    p {
+        flex: 3;
+        text-align: left;
+        text-wrap: wrap;
+    }
+
+    .cost {
+        margin: 5px;
+        flex: 1;
+    }
+
+    button {
+        text-align: center;
+        justify-self: flex-end;
+        height: 30px;
+        width: 30px;
+    }
+
+    
+}
+
+.cartItem:hover {
+    box-shadow: 3px 3px 5px $accent;
+    scale: 1.02;
 }

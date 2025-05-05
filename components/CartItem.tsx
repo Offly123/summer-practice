@@ -19,17 +19,15 @@ export default function CartItem( {
         <div className={style.cartItem}>
             <div className={style.imageWrap}>
                 <img 
-                    height={'150px'} 
+                    height={'50px'} 
                     src={product.src} 
                     alt={`${product.name}.png`} 
                     />
             </div>
             <h2>{ product.name }</h2>
             <p>{ product.description }</p>
-            <div className={style.cardEnd}>
-                <button onClick={onClick.bind(null, product)}>-</button>
-                <p>{ product.cost }&#x20bd;</p>
-            </div>
+            <p className={style.cost}>{ product.cost }&#x20bd;</p>
+            <button onClick={onClick.bind(null, product)}>x</button>
         </div>
     )
 

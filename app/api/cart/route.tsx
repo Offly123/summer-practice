@@ -1,6 +1,6 @@
 'use server'
 
-import { connectToDB } from "../db"
+import { connectToDB, showDBError } from "../db"
 import { Product } from "$/ProductCard";
 
 interface DBProduct {
@@ -54,8 +54,7 @@ export async function POST(req: Request): Promise<Response> {
         });
         dbProductList = await Promise.all(promises);
     } catch (err) {
-        console.log(err);
-        return new Response(JSON.stringify({error: true}));
+        return await showDBError(connection, err);
     }
 
 
